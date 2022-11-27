@@ -21,8 +21,8 @@ namespace SharedContext.Infrastructure.FM.Migrations
             this.Create
                 .Table(PeopleTableName)
                 .InSchema(SchemaName)
-                .WithColumn("Id").AsInt32().NotNullable().PrimaryKey()
-                .WithColumn("FirstName").AsString().NotNullable();
+                .WithColumn("id").AsInt32().NotNullable().PrimaryKey()
+                .WithColumn("first_Name").AsString().NotNullable();
         }
     }
 }
