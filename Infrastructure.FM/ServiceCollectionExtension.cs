@@ -2,6 +2,8 @@
 using Infrastructure.FM.Runners;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using Npgsql;
+using System.Data.Common;
 
 namespace Infrastructure.FM;
 public static class ServiceCollectionExtension
@@ -16,6 +18,7 @@ public static class ServiceCollectionExtension
             .BindConfiguration("TestDb")
             .ValidateDataAnnotations();
 
+        services.AddDbConnection();
 
         services
             .AddFluentMigratorCore()
@@ -25,12 +28,15 @@ public static class ServiceCollectionExtension
                     builder
                         .AddPostgres()
                         .WithGlobalCommandTimeout(TimeSpan.FromMinutes(5))
-                        .WithGlobalConnectionString(provider => {
-                            var cs = provider.GetRequiredService<IOptions<DatabaseConfiguration>>().Value.ConnectionString;
-                            return provider.GetRequiredService<IOptions<DatabaseConfiguration>>().Value.ConnectionString; 
-                        })
-                        .ScanIn(typeof(AssemblyNamePlaceHolder).Assembly)
-                        .For.Migrations();
+                        .WithGlobalConnectionString(provider => provider.GetRequiredService<IOptions<DatabaseConfiguration>>().Value.ConnectionString
+                            )
+                            .ScanIn(typeof(AssemblyNamePlaceHolder).Assembly)
+                            .For.Migrations();
                 });
+
+
     }
+
+    private static IServiceCollection AddDbConnection(this IServiceCollection services) =>
+        services.AddScoped<DbConnection>(provider => new NpgsqlConnection(provider.GetRequiredService<IOptions<DatabaseConfiguration>>().Value.ConnectionString));
 }

@@ -1,4 +1,5 @@
 ﻿using Infrastructure.FM.Runners;
+using Tests.Database.TableHelpers;
 
 namespace Tests.Database.Fixture;
 
@@ -25,4 +26,5 @@ public class DatabaseFixture : IAsyncLifetime
         await this.SqlContainer.DisposeAsync();
     }
 
+    public PeopleTableHelper GetPeopleTableHelper() => new(Configuration.GetNpgsqlConnection());
 }

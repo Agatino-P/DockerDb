@@ -5,12 +5,12 @@ namespace SharedContext.Infrastructure.FM.Migrations
     [Migration(20221127001100)]
     public class CreatePeople : Migration
     {
-        private const string CompanyTableName = "People";
-        private const string SchemaName = "TestSchema";
+        private const string PeopleTableName = "people";
+        private const string SchemaName = "test_schema";
 
         public override void Down()
         {
-            this.Delete.Table(CompanyTableName).InSchema(SchemaName);
+            this.Delete.Table(PeopleTableName).InSchema(SchemaName);
             this.Delete.Schema(SchemaName);
         }
 
@@ -19,7 +19,7 @@ namespace SharedContext.Infrastructure.FM.Migrations
             this.Create.Schema(SchemaName);
 
             this.Create
-                .Table(CompanyTableName)
+                .Table(PeopleTableName)
                 .InSchema(SchemaName)
                 .WithColumn("Id").AsInt32().NotNullable().PrimaryKey()
                 .WithColumn("FirstName").AsString().NotNullable();
