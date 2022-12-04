@@ -5,19 +5,19 @@ using Microsoft.Extensions.Hosting;
 using Npgsql;
 using System.Data.Common;
 
-namespace Shared.Tests.Database.Fixture;
+namespace Shared.Tests.Kafka.Fixture;
 
-public sealed class Configuration
+public sealed class KafkaFixtureConfiguration
 {
     private readonly IHostBuilder hostBuilder;
     private IServiceProvider? services;
 
-    public Configuration()
+    public KafkaFixtureConfiguration()
     {
         this.hostBuilder = CreateHostBuilder();
     }
 
-    public void InjectConnectionString(string connectionString)
+    public void InjectBootstrapServers(string bootstrapServers)
     {
         this.hostBuilder.ConfigureAppConfiguration(
             (_, builder) =>
@@ -25,8 +25,19 @@ public sealed class Configuration
                 builder.AddInMemoryCollection(
                     new List<KeyValuePair<string, string?>>
                     {
-                        new("TestDb:ConnectionString", connectionString)
+                        new("Kafka:BootstrapServers", bootstrapServers)
                     });
+            });
+    }
+
+    public void InjectTopics(IEnumerable<string> topics)
+    {
+        var configValues = 
+            topics.Select((topic, counter) => new KeyValuePair<string, string>($"Kafka:Topics:{counter.ToString()}", topic)).ToList();
+        this.hostBuilder.ConfigureAppConfiguration(
+            (_, builder) =>
+            {
+                builder.AddInMemoryCollection(configValues!);
             });
     }
 
@@ -44,15 +55,7 @@ public sealed class Configuration
             )
             .ConfigureServices(
                 (_, services) =>
-                    services
-                        //.AddDataSources()
-                        //.AddCollectionContextWriteDbDependencies()
-                        //.AddCollectionContextReadDbDependencies("CollectionContext:Read")
-                        //.AddPayablesContextWriteDbDependencies()
-                        .ConfigureDatabaseMigration());
-        
-
+                    services.ConfigureKafka());
     }
 
-    public NpgsqlConnection GetNpgsqlConnection() => (this.GetRequiredService<DbConnection>() as NpgsqlConnection)!;
 }

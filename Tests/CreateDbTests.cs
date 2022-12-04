@@ -1,8 +1,8 @@
 using FluentAssertions;
-using Tests.Database.Fixture;
-using Tests.Database.TableHelpers;
+using Shared.Tests.Database.Fixture;
+using Shared.Tests.Database.TableHelpers;
 
-namespace Tests;
+namespace Shared.Tests;
 
 public class CreateDbTests :  IClassFixture<DatabaseFixture>
 {

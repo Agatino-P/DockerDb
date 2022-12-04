@@ -32,8 +32,8 @@ public class ScriptExecuter
 
     private string readResource(string resouceName)
     {
-        using Stream stream = _assembly.GetManifestResourceStream(resouceName);
-        using StreamReader reader = new StreamReader(stream);
+        using Stream stream = _assembly!.GetManifestResourceStream(resouceName)!;
+        using StreamReader reader = new StreamReader(stream!);
         string result = reader.ReadToEnd();
         return result;
     }

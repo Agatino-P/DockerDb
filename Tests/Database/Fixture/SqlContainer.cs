@@ -1,13 +1,8 @@
 ﻿using DotNet.Testcontainers.Builders;
 using DotNet.Testcontainers.Configurations;
 using DotNet.Testcontainers.Containers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Tests.Database.Fixture;
+namespace Shared.Tests.Database.Fixture;
 public sealed class SqlContainer : IAsyncLifetime
 {
     private readonly PostgreSqlTestcontainer testContainerDatabase;

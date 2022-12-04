@@ -2,7 +2,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace Tests.Database.TableHelpers;
+namespace Shared.Tests.Database.TableHelpers;
 
 public class PeopleTableHelper
 {

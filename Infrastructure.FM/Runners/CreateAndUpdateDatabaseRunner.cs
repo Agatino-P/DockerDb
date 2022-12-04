@@ -11,7 +11,8 @@ public class CreateAndUpdateDatabaseRunner : BaseRunner
     public CreateAndUpdateDatabaseRunner(
         ILogger<CreateAndUpdateDatabaseRunner> logger,
         IMigrationRunner migrationRunner,
-        IOptions<DatabaseConfiguration> databaseConfiguration) : base(databaseConfiguration.Value, logger)
+        IOptions<DatabaseConfiguration> databaseConfiguration) 
+            : base(databaseConfiguration.Value, logger)
     {
         this.migrationRunner = migrationRunner;
     }

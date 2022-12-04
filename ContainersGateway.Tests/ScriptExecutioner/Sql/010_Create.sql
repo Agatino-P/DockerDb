@@ -1,1 +1,1 @@
-﻿CREATE Table;
+﻿--CREATE TABLE;

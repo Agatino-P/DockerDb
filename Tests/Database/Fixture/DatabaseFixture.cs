@@ -1,7 +1,7 @@
 ﻿using Infrastructure.FM.Runners;
-using Tests.Database.TableHelpers;
+using Shared.Tests.Database.TableHelpers;
 
-namespace Tests.Database.Fixture;
+namespace Shared.Tests.Database.Fixture;
 
 public class DatabaseFixture : IAsyncLifetime
 {
