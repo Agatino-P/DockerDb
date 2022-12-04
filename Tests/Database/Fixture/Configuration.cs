@@ -25,8 +25,7 @@ public sealed class Configuration
                 builder.AddInMemoryCollection(
                     new List<KeyValuePair<string, string?>>
                     {
-                        new("TestDb:ConnectionString", connectionString),
-                        new("CollectionContext:Read:Database:ConnectionString", connectionString)
+                        new("TestDb:ConnectionString", connectionString)
                     });
             });
     }
